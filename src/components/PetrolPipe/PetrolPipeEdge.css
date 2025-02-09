@@ -1,0 +1,22 @@
+/* Основной стиль линии нефтепровода */
+.petrol-pipe-edge {
+    stroke: black; /* Черный цвет трубы */
+    stroke-width: 4px; /* Толщина трубы */
+    stroke-dasharray: 8, 4; /* Пунктирный стиль для имитации потока */
+    animation: oilFlowAnimation 1.5s linear infinite; /* Анимация */
+}
+
+/* Анимация потока внутри трубы */
+@keyframes oilFlowAnimation {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+
+/* Стиль для текста, который отображается на трубе */
+.petrol-pipe-label {
+    font-size: 12px;
+    font-weight: bold;
+    fill: white; /* Белый текст на черной трубе */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Тень для лучшей видимости */
+}

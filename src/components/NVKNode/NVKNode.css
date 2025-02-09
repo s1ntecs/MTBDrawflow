@@ -1,0 +1,169 @@
+/* Общий контейнер узла */
+.nvk-node {
+    width: 400px;
+    background-color: #f0f0f0;
+    border: 4px solid black;
+    border-radius: 12px;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+/* Заголовок */
+.nvk-node__header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    border: 4px solid black;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Содержимое */
+.nvk-node__body {
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+}
+
+/* Основной контейнер табло: единый прямоугольник с закруглёнными краями */
+.info-board {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;  /* Небольшой промежуток между ячейками */
+    border: 4px solid black;
+    border-radius: 12px;
+    overflow: hidden; /* Чтобы внутренние ячейки не выступали за скруглённые края */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    max-height: 125px;
+    background-color: black; /* Черный фон контейнера (разделители) */
+}
+
+/* Все панели внутри табло */
+.info-board__load,
+.info-board__year,
+.info-board__balance {
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: black; /* Черные разделители */
+    justify-content: center;
+}
+
+/* Верхняя левая секция (нагрузка) */
+.info-board__load {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    background-color: #28a745; /* Зелёный или красный фон */
+    border-right: 1px solid black; /* Чёрная внешняя граница */
+    border-bottom: 1px solid black; /* Чёрная внешняя граница */
+
+}
+.info-board__text {
+    justify-content: center;
+}
+/* Верхняя правая секция (год ввода) */
+.info-board__year {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+    background-color: #3498db; /* Синий фон */
+    border-left: 1px solid black; /* Чёрная внешняя граница */
+    border-bottom: 1px solid black; /* Чёрная внешняя граница */
+}
+
+/* Нижняя секция (баланс) */
+.info-board__balance {
+    grid-row: 2 / 3;
+    grid-column: 1 / 3;
+    background-color: #e74c3c; /* Красный (если ошибка) или зелёный */
+    border-top: 1px solid black; /* Чёрная внешняя граница */
+    /*height: 110px;*/
+}
+
+/* Стили для иконки */
+.info-board__icon {
+    padding-top: 2px;
+    width: 40px;
+    height: 40px;
+    /*margin-bottom: 8px;*/
+}
+
+/* Заголовок секции */
+.info-board__title {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+/* Значение внутри секции */
+.info-board__value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nvk-node__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Отступ между кнопками */
+}
+
+/* Стили для кнопки */
+.nvk-node__button {
+    width: 180px;
+    height: 40px;
+    background-color: #000;            /* Черный фон кнопки */
+    color: #fff;                       /* Белый текст */
+    border: none;
+    border-radius: 12px;
+    padding: 8px;                      /* Немного уменьшенный внутренний отступ */
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 18px;                        /* Расстояние между иконкой и текстом */
+    transition: background-color 0.3s;
+}
+
+.nvk-node__button:hover {
+    background-color: #333;
+}
+
+/* Контейнер для иконки с белым прямоугольным фоном */
+.nvk-node__button-icon-container {
+    background-color: #fff;            /* Белый фон */
+    border-radius: 6px;                /* Скругление углов */
+    padding: 2px;                     /* Внутренний отступ для создания "рамки" вокруг иконки */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Стили для иконки в кнопке */
+.nvk-node__button-icon {
+    width: 25px;                     /* Уменьшенный размер иконки */
+    height: 25px;
+    object-fit: contain;
+}
+
+/* Стиль для текста кнопки */
+.nvk-node__label {
+    display: inline-block;
+}
+
+/* Соединительные точки */
+.nvk-node__handle {
+    width: 10px;
+    height: 10px;
+    background-color: #555;
+    border-radius: 50%;
+    position: absolute;
+}
