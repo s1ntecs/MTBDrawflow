@@ -1,58 +1,69 @@
-import React, { memo } from 'react';
-import { getSmoothStepPath, getEdgeCenter } from '@xyflow/react';
+import React from 'react';
+import { BaseEdge, getSmoothStepPath, EdgeLabelRenderer } from '@xyflow/react';
 import './PetrolPipeEdge.css'; // Подключаем стили
 
-const PetrolPipeEdge = ({
-                            id,
-                            sourceX,
-                            sourceY,
-                            targetX,
-                            targetY,
-                            sourcePosition,
-                            targetPosition,
-                            style = {},
-                            markerEnd,
-                            data,
-                        }) => {
-    // Получаем путь ребра (сглаженный "step" путь)
-    const edgePath = getSmoothStepPath({
+export function AnimatedSVGEdge({
+                                    id,
+                                    sourceX,
+                                    sourceY,
+                                    targetX,
+                                    targetY,
+                                    sourcePosition,
+                                    targetPosition,
+                                    data, // Данные, содержащие текст
+                                }) {
+    const [edgePath, labelX, labelY] = getSmoothStepPath({
         sourceX,
         sourceY,
+        sourcePosition,
         targetX,
         targetY,
-        sourcePosition,
         targetPosition,
     });
 
-    // Центр линии для текста
-    const [edgeCenterX, edgeCenterY] = getEdgeCenter({
-        sourceX,
-        sourceY,
-        targetX,
-        targetY,
-    });
+    // Рассчитываем длину трубы (размер пути)
+    const distance = Math.sqrt((targetX - sourceX) ** 2 + (targetY - sourceY) ** 2);
 
-    // Метка трубы (если не передана, по умолчанию 'PetrolPipe')
-    const label = data?.label || 'PetrolPipe';
+    // Количество точек (чем длиннее труба, тем больше точек, но не менее 3)
+    const numParticles = Math.max(3, Math.floor(distance / 50));
 
     return (
         <>
-            {/* Труба */}
-            <path
+            {/* Основная черная труба */}
+            <BaseEdge
                 id={id}
-                className="petrol-pipe-edge"
-                d={edgePath}
-                markerEnd={markerEnd}
+                path={edgePath}
+                style={{
+                    stroke: '#000',
+                    strokeWidth: 5,
+                    strokeLinecap: 'round',
+                    strokeDasharray: '10,6',
+                }}
             />
 
-            {/* Надпись на трубе */}
-            <text className="petrol-pipe-label">
-                <textPath href={`#${id}`} startOffset="50%" textAnchor="middle">
-                    {label}
-                </textPath>
-            </text>
+            {/* Анимация потока */}
+            {Array.from({ length: numParticles }).map((_, i) => (
+                <circle key={i} r="5" fill="black">
+                    <animateMotion
+                        dur={`${2 + i * 0.5}s`}
+                        repeatCount="indefinite"
+                        path={edgePath}
+                        begin={`${i * 0.5}s`}
+                    />
+                </circle>
+            ))}
+
+            {/* Красивый текст на линии */}
+            <EdgeLabelRenderer>
+                <div
+                    className="edge-label nodrag nopan"
+                    style={{
+                        transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
+                    }}
+                >
+                    {data?.label}
+                </div>
+            </EdgeLabelRenderer>
         </>
     );
-};
-
-export default memo(PetrolPipeEdge);
+}

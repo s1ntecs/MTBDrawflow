@@ -20,3 +20,16 @@
     fill: white; /* Белый текст на черной трубе */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Тень для лучшей видимости */
 }
+.edge-label {
+    font-family: sans-serif;
+    position: absolute;
+    background-color: #2E2E2E;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    user-select: none;
+}

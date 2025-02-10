@@ -16,7 +16,7 @@ import '@xyflow/react/dist/style.css';
 import Sidebar from './Sidebar.jsx';
 import { DnDProvider, useDnD } from './DnDContext.jsx';
 import NVKNode from './components/NVKNode';
-import PetrolPipeEdge from './components/PetrolPipe/PetrolPipeEdge.jsx';
+import {AnimatedSVGEdge} from './components/PetrolPipe/PetrolPipeEdge.jsx';
 
 
 const nodeTypes = {
@@ -24,7 +24,7 @@ const nodeTypes = {
 };
 
 const edgeTypes = {
-    petrolPipe: PetrolPipeEdge,
+    petrolPipe: AnimatedSVGEdge,
 };
 
 const initialNodes = [
@@ -43,7 +43,14 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-    { id: 'e1-2', source: '1', target: '2', animated: true, type: 'petrolPipe' },
+    {
+        id: 'e1-2',
+        source: '1',
+        target: '2',
+        animated: true,
+        type: 'petrolPipe',
+        data: { label: 'Трубопровод' }, // Добавили текст
+    },
 ];
 
 
@@ -60,7 +67,11 @@ const DnDFlow = () => {
     const onConnect = useCallback(
         (params) =>
             setEdges((eds) =>
-                addEdge({ ...params, animated: true, type: "step" }, eds),
+                addEdge({ ...params,
+                    animated: true,
+                    type: "petrolPipe",
+                    data: { label: 'Трубопровод' },
+                }, eds),
             ),
         [],
     );
